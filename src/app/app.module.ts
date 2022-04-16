@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 // Modulos
 import { AppRoutingModule } from './app-routing.module';
 
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -20,14 +19,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import {provideFirestore,getFirestore} from '@angular/fire/firestore';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import {AngularFireAuthModule} from '@angular/fire/compat/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { StoreModule } from '@ngrx/store';
 import { appReducers } from './app.reducer';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
+import {
+  ScreenTrackingService,
+  UserTrackingService,
+} from '@angular/fire/analytics';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,7 @@ import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService
     DetalleComponent,
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -50,15 +52,15 @@ import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService
     AppRoutingModule,
     ReactiveFormsModule,
     StoreModule.forRoot(appReducers),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAnalytics(() => getAnalytics()),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+    }),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
-
+    provideFirestore(() => getFirestore()),
   ],
-  providers: [
-    ScreenTrackingService,UserTrackingService
-  ],
-  bootstrap: [AppComponent]
+  providers: [ScreenTrackingService, UserTrackingService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
