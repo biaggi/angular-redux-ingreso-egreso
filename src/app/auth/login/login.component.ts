@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", Validators.required],
+      email: ["biaggi@gmail.com", [Validators.required, Validators.email]],
+      password: ["123456", Validators.required],
     });
     const sub = this.store.select('ui').subscribe(ui => {
       this.isLoading = ui.loading;
@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    console.log(this.loginForm.valid, this.loginForm.value);
     if (this.loginForm.invalid) return;
     // Swal.fire({
     //   title: "Espere por favor",

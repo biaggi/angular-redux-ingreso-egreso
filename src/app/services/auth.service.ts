@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { map } from 'rxjs/operators';
-import { createUser } from '../model/user.model';
+import { map, take } from 'rxjs/operators';
+import { createUser, UserModel } from '../model/user.model';
+import { AppState } from '../app.reducer';
+import { Store } from '@ngrx/store';
+import { setUser, unsetUser } from '../auth/auth.actions';
 
 export interface UserIface {
   name: string;
@@ -16,7 +19,8 @@ export interface UserIface {
 export class AuthService {
   constructor(
     public auth: AngularFireAuth,
-    public firestore: AngularFirestore
+    public firestore: AngularFirestore,
+    public store: Store<AppState>
   ) {}
 
   createUser(user: UserIface) {
@@ -26,7 +30,7 @@ export class AuthService {
       .then((user) => {
         const { uid, email } = user.user!;
         const newUser = createUser(uid, name, email);
-        return this.firestore.doc(`${uid}/usuario`).set(newUser);
+        return this.firestore.doc(this.getDoc(uid)).set(newUser);
       });
   }
 
@@ -34,6 +38,20 @@ export class AuthService {
     this.auth.authState.subscribe((user) => {
       console.log(user?.uid);
       console.log(user?.email);
+      if (user) {
+        return this.firestore
+          .doc(this.getDoc(user.uid))
+          .valueChanges()
+          .pipe(take(1))
+          .subscribe((fsUser) => {
+            this.store.dispatch(
+              setUser({
+                user: { ...(fsUser as UserModel) },
+              })
+            );
+          });
+      }
+      return this.store.dispatch(unsetUser());
     });
   }
 
@@ -48,5 +66,8 @@ export class AuthService {
 
   isAuth() {
     return this.auth.authState.pipe(map((fbUser) => fbUser !== null));
+  }
+  private getDoc(uid: string) {
+    return `${uid}/usuario`;
   }
 }
