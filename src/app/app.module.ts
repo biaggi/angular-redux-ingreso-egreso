@@ -31,6 +31,7 @@ import {
   UserTrackingService,
 } from '@angular/fire/analytics';
 import { SortPipe } from './pipes/sort.pipe';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { SortPipe } from './pipes/sort.pipe';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NgChartsModule,
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
