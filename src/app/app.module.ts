@@ -30,6 +30,7 @@ import {
   ScreenTrackingService,
   UserTrackingService,
 } from '@angular/fire/analytics';
+import { SortPipe } from './pipes/sort.pipe';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
+    SortPipe,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

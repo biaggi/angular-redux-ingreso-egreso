@@ -15,7 +15,7 @@
                     </thead>
 
                     <tbody>
-                        <tr *ngFor="let operation of operations">
+                        <tr *ngFor="let operation of operations |sort:'amount':'desc'">
                             <td>{{operation.description}}</td>
                             <td>{{operation.amount | currency}}</td>
                             <td [class.text-success]="operation.type == 'ingreso'" [class.text-danger]="operation.type == 'egreso'">
