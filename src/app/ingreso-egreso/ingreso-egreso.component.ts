@@ -7,6 +7,7 @@ import { AppState } from '../app.reducer';
 import { Store } from '@ngrx/store';
 import { UiState } from '../shared/ui.reducers';
 import { Subscription } from 'rxjs';
+import * as uiActions from '../shared/ui.actions';
 
 @Component({
   selector: 'app-ingreso-egreso',
@@ -44,13 +45,16 @@ export class IngresoEgresoComponent implements OnInit, OnDestroy {
 
     if (this.ingresoEgresoForm.invalid) return;
     const { description, amount } = this.ingresoEgresoForm.value;
+    this.store.dispatch(uiActions.setLoading())
     this.ingresoEgresoService
       .set({ description, amount, type: this.type })
       ?.then((data) => {
         Swal.fire('Registro creado ', undefined, 'success');
+        this.store.dispatch(uiActions.stopLoading())
       })
       .catch((e) => {
         Swal.fire('Error al guardar el ingreso', undefined, 'success');
+        this.store.dispatch(uiActions.stopLoading())
       });
   }
 }
