@@ -14,7 +14,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   {
     path: '',
-    loadChildren: () => import('./ingreso-egreso/operation.module').then(m => m.OperationModule)
+    loadChildren: () => import('./ingreso-egreso/operation.module').then(m => m.OperationModule),
+    canLoad: [AuthGuard],
   },
   { path: '**', redirectTo: '' },
 ];
