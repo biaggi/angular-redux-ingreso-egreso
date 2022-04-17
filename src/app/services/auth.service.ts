@@ -50,14 +50,13 @@ export class AuthService {
   }
 
   initAuthListener() {
-    this.auth.authState.subscribe(async (user) => {
+    this.auth.authState.subscribe((user) => {
       if (user) {
         this.userSubscription = this.firestore
           .doc(this.getDoc(user.uid))
           .valueChanges()
           .subscribe((fsUser) => {
             this.user = { ...(fsUser as UserModel) };
-
             this.store.dispatch(
               setUser({
                 user: this.user,
@@ -65,17 +64,16 @@ export class AuthService {
             );
           });
         return this.userSubscription;
+      } else {
+        this.user = null;
+        this.userSubscription?.unsubscribe();
+        this.store.dispatch(unsetItems());
+        return this.store.dispatch(unsetUser());
       }
-      this.user = null;
-      this.userSubscription?.unsubscribe();
-      await this.store.dispatch(unsetItems());
-      return this.store.dispatch(unsetUser());
     });
   }
 
-  private userDestructionSequence() {
-
-  }
+  private userDestructionSequence() {}
 
   login(user: { email: string; password: string }) {
     const { email, password } = user;

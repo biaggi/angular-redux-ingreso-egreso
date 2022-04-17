@@ -3,10 +3,10 @@ import * as actions from './auth.actions';
 import { UserModel, createUser } from '../model/user.model';
 
 export interface AuthState {
-  user: UserModel | null;
+  user: UserModel | undefined;
 }
 
-export const initialState: AuthState = { user: null };
+export const initialState: AuthState = { user: undefined };
 
 export const authReducer = createReducer(
   initialState,
@@ -14,5 +14,5 @@ export const authReducer = createReducer(
   on(actions.setUser, (state, { user }): AuthState => {
     return { ...state, user };
   }),
-  on(actions.unsetUser, (state) => ({ ...state, user: null }))
+  on(actions.unsetUser, (state) => ({ ...state, user: undefined }))
 );

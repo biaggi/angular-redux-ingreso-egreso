@@ -51,7 +51,6 @@ export class EstadisticaComponent implements OnInit {
           }
         }
         this.stats = newStats;
-        console.log(this.stats);
         this.doughnutChartData = {
           labels: this.doughnutChartLabels,
           datasets: [
@@ -84,7 +83,6 @@ export class EstadisticaComponent implements OnInit {
     event: ChartEvent;
     active: {}[];
   }): void {
-    console.log(event, active);
   }
 
   public chartHovered({
@@ -94,6 +92,5 @@ export class EstadisticaComponent implements OnInit {
     event: ChartEvent;
     active: {}[];
   }): void {
-    console.log(event, active);
   }
 }

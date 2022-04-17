@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
-  QuerySnapshot,
 } from '@angular/fire/compat/firestore';
 import { OperationModel, IngresoEgresoType } from '../model/ingreso-egreso';
 import { AuthService } from './auth.service';
-import { UserModel } from '../model/user.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

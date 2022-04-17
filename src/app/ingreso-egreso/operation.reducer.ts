@@ -7,8 +7,8 @@ export interface OperationState {
   items: OperationModel[];
 }
 
-export interface AppStateOperation extends AppState{
-  operations: OperationState
+export interface AppStateOperation extends AppState {
+  operations: OperationState;
 }
 
 export const initialState: OperationState = { items: [] };
@@ -17,7 +17,6 @@ export const operationReducer = createReducer(
   initialState,
   on(action.setItems, (state, { items }) => ({ ...state, items: [...items] })),
   on(action.unsetItems, (state) => {
-    console.log({ ...state, items: [] });
-    return { ...state, items: [] }
+    return { ...state, items: [] };
   })
 );

@@ -42,7 +42,6 @@ export class SidebarComponent implements OnInit {
     this.authService
       .logout()
       .then((data) => {
-        console.log(data);
         Swal.close();
         this.router.navigate(['/login']);
       })
