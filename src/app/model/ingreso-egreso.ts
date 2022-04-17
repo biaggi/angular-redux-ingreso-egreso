@@ -1,6 +1,7 @@
-export interface IngresoEgreso {
+export type IngresoEgresoType = 'ingreso' | 'egreso';
+export interface OperationModel {
   description: string;
-  amount: number
-  type: string
-  uid: string
+  amount: number;
+  type: IngresoEgresoType
+  uid: string;
 }

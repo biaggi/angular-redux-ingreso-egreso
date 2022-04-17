@@ -13,12 +13,24 @@ export interface UserIface {
   email: string;
   password: string;
 }
+type OptionalUserModel = UserModel | null;
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   userSubscription: Subscription | undefined;
+  private _user: OptionalUserModel = null;
+
+  get user(): OptionalUserModel {
+    return this._user;
+  }
+
+  // just to be able to use the same attribute name
+  private set user(user) {
+    this._user = user;
+  }
+
   constructor(
     public auth: AngularFireAuth,
     public firestore: AngularFirestore,
@@ -38,21 +50,22 @@ export class AuthService {
 
   initAuthListener() {
     this.auth.authState.subscribe((user) => {
-      console.log(user?.uid);
-      console.log(user?.email);
       if (user) {
         this.userSubscription = this.firestore
           .doc(this.getDoc(user.uid))
           .valueChanges()
           .subscribe((fsUser) => {
+            this.user = { ...(fsUser as UserModel) };
+
             this.store.dispatch(
               setUser({
-                user: { ...(fsUser as UserModel) },
+                user: this.user,
               })
             );
           });
         return this.userSubscription;
       }
+      this.user = null;
       this.userSubscription?.unsubscribe();
       return this.store.dispatch(unsetUser());
     });
