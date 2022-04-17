@@ -9,12 +9,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { dashboardRoutes } from './dashboard/dashboard.routes';
 import { AuthGuard } from './services/auth.guard';
 
-
 const routes: Routes = [
 
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    {
+    // {
+    //   path: '',
+    //   loadChildren: () => import('lazy-path').then(m => m.lazy-module)
+    // },
+        {
         path: '',
         component: DashboardComponent,
         children: dashboardRoutes,

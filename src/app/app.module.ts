@@ -5,15 +5,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IngresoEgresoComponent } from './ingreso-egreso/ingreso-egreso.component';
 import { EstadisticaComponent } from './ingreso-egreso/estadistica/estadistica.component';
 import { DetalleComponent } from './ingreso-egreso/detalle/detalle.component';
-import { FooterComponent } from './shared/footer/footer.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
+// import { FooterComponent } from './shared/footer/footer.component';
+// import { NavbarComponent } from './shared/navbar/navbar.component';
+// import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFireModule } from '@angular/fire/compat';
@@ -32,29 +30,40 @@ import {
 } from '@angular/fire/analytics';
 import { SortPipe } from './pipes/sort.pipe';
 import { NgChartsModule } from 'ng2-charts';
+import { AuthModule } from './auth/auth.module';
+import { SharedModule } from './shared/shared.module';
+import { SortModule } from './pipes/sort.module';
+import { OperationModule } from './ingreso-egreso/operation.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    DashboardComponent,
-    IngresoEgresoComponent,
-    EstadisticaComponent,
-    DetalleComponent,
+
+    // DashboardComponent,
+    // IngresoEgresoComponent,
+    // EstadisticaComponent,
+    // DetalleComponent,
+    /*
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    SortPipe,
+    */
+    // SortPipe,
   ],
   imports: [
+    SortModule,
+    AuthModule,
+    OperationModule,
+    // SharedModule,
+
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    NgChartsModule,
+
+    // ReactiveFormsModule,
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
