@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { IngresoEgresoType } from '../model/ingreso-egreso';
-import { IngresoEgresoService } from '../services/ingreso-egreso.service';
+import { OperationsService } from '../services/operations.service';
 import { AppState } from '../app.reducer';
 import { Store } from '@ngrx/store';
 import { UiState } from '../shared/ui.reducers';
@@ -21,7 +21,7 @@ export class IngresoEgresoComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
-    private ingresoEgresoService: IngresoEgresoService,
+    private ingresoEgresoService: OperationsService,
     private store: Store<AppState>
   ) {}
 
