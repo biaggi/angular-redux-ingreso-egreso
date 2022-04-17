@@ -1,21 +1,40 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import Swal from "sweetalert2";
-import { AuthService } from "../../services/auth.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { AppState } from 'src/app/app.reducer';
+import Swal from 'sweetalert2';
+import { AuthService } from '../../services/auth.service';
+import { UserModel } from '../../model/user.model';
 
 @Component({
-  selector: "app-sidebar",
-  templateUrl: "./sidebar.component.html",
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
   styles: [],
 })
 export class SidebarComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private store: Store<AppState>
+  ) {}
 
-  ngOnInit() {}
+  subs: Subscription[] = [];
+  user: UserModel | undefined | null;
+
+  ngOnInit() {
+    this.store.select('auth').subscribe(({user}) => {
+      this.user = user;
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.subs.map((item) => item.unsubscribe());
+  }
 
   logout() {
     Swal.fire({
-      title: "Espere por favor",
+      title: 'Espere por favor',
       didOpen: () => {
         Swal.showLoading();
       },
@@ -23,15 +42,15 @@ export class SidebarComponent implements OnInit {
     this.authService
       .logout()
       .then((data) => {
-        console.log(data)
+        console.log(data);
         Swal.close();
-        this.router.navigate(["/login"]);
+        this.router.navigate(['/login']);
       })
       .catch((e) => {
         Swal.fire({
-          icon: "error",
+          icon: 'error',
           title: e.message,
-          text: "Something went wrong!",
+          text: 'Something went wrong!',
           footer: '<a href="">Why do I have this issue?</a>',
         });
       });
