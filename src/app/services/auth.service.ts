@@ -7,6 +7,7 @@ import { AppState } from '../app.reducer';
 import { Store } from '@ngrx/store';
 import { setUser, unsetUser } from '../auth/auth.actions';
 import { Subscription } from 'rxjs';
+import { unsetItems } from '../ingreso-egreso/operation.actions';
 
 export interface UserIface {
   name: string;
@@ -49,7 +50,7 @@ export class AuthService {
   }
 
   initAuthListener() {
-    this.auth.authState.subscribe((user) => {
+    this.auth.authState.subscribe(async (user) => {
       if (user) {
         this.userSubscription = this.firestore
           .doc(this.getDoc(user.uid))
@@ -67,8 +68,13 @@ export class AuthService {
       }
       this.user = null;
       this.userSubscription?.unsubscribe();
+      await this.store.dispatch(unsetItems());
       return this.store.dispatch(unsetUser());
     });
+  }
+
+  private userDestructionSequence() {
+
   }
 
   login(user: { email: string; password: string }) {

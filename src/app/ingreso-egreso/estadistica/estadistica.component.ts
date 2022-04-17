@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.reducer';
-import { OperationState } from '../operation.reducer';
+import { OperationState, AppStateOperation } from '../operation.reducer';
 import { OperationModel } from '../../model/ingreso-egreso';
 import { ChartData, ChartEvent, ChartType } from 'chart.js';
 
@@ -28,7 +28,7 @@ export class EstadisticaComponent implements OnInit {
     totalOutcome: 0,
   };
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppStateOperation>) {}
 
   ngOnInit() {
     this.subs.push(

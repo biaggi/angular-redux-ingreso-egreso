@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
 import { Subscription } from 'rxjs';
 import { OperationModel } from 'src/app/model/ingreso-egreso';
 import { OperationsService } from '../../services/operations.service';
+import { AppStateOperation } from '../operation.reducer';
 
 @Component({
   selector: 'app-detalle',
@@ -15,7 +15,7 @@ export class DetalleComponent implements OnInit, OnDestroy {
   operations: OperationModel[] = [];
 
   constructor(
-    private store: Store<AppState>,
+    private store: Store<AppStateOperation>,
     private operationsService: OperationsService
   ) {}
 

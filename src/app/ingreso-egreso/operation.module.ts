@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { NgChartsModule } from 'ng2-charts';
 import { DashboardRoutesModule } from '../dashboard/dashboard-routes.module';
+import { StoreModule } from '@ngrx/store';
+import { operationReducer } from './operation.reducer';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { DashboardRoutesModule } from '../dashboard/dashboard-routes.module';
     ReactiveFormsModule,
     SharedModule,
     NgChartsModule,
-    DashboardRoutesModule
+    DashboardRoutesModule,
+    StoreModule.forFeature('operations', operationReducer),
   ],
   exports: [],
 })

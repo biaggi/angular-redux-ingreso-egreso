@@ -6,11 +6,9 @@ import { OperationState, operationReducer } from './ingreso-egreso/operation.red
 export interface AppState {
   ui: UiState;
   auth: AuthState
-  operations: OperationState
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
   ui: uiReducer,
-  auth: authReducer,
-  operations: operationReducer
+  auth: authReducer
 };
