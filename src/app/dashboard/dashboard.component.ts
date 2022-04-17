@@ -17,7 +17,6 @@ import { setItems } from '../ingreso-egreso/operation.actions';
 export class DashboardComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   user: UserModel | undefined;
-  operations: OperationModel[] = [];
 
   constructor(
     private store: Store<AppState>,
@@ -41,10 +40,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           }
         })
     );
-
-    this.subs.push(this.store.select('operations').subscribe(operations => {
-      this.operations = operations.items;
-    }))
   }
 
   ngOnDestroy(): void {

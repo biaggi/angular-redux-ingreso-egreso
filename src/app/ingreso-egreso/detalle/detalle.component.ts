@@ -1,15 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { Subscription } from 'rxjs';
+import { OperationModel } from 'src/app/model/ingreso-egreso';
 
 @Component({
   selector: 'app-detalle',
   templateUrl: './detalle.component.html',
-  styles: []
+  styles: [],
 })
-export class DetalleComponent implements OnInit {
+export class DetalleComponent implements OnInit, OnDestroy {
+  subs: Subscription[] = [];
+  operations: OperationModel[] = [];
 
-  constructor() { }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
+    this.subs.push(
+      this.store.select('operations').subscribe((operations) => {
+        this.operations = operations.items;
+      })
+    );
   }
 
+  ngOnDestroy(): void {
+    this.subs.map((item) => item.unsubscribe());
+  }
 }
