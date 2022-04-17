@@ -9,6 +9,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { NgChartsModule } from 'ng2-charts';
+import { DashboardRoutesModule } from '../dashboard/dashboard-routes.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { NgChartsModule } from 'ng2-charts';
     ReactiveFormsModule,
     SharedModule,
     NgChartsModule,
+    DashboardRoutesModule
   ],
   exports: [],
 })

@@ -33,7 +33,6 @@ import { NgChartsModule } from 'ng2-charts';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { SortModule } from './pipes/sort.module';
-import { OperationModule } from './ingreso-egreso/operation.module';
 
 @NgModule({
   declarations: [
@@ -53,7 +52,7 @@ import { OperationModule } from './ingreso-egreso/operation.module';
   imports: [
     SortModule,
     AuthModule,
-    OperationModule,
+    // OperationModule,
     // SharedModule,
 
     AngularFireModule.initializeApp(environment.firebase),

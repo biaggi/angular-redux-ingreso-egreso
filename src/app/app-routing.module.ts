@@ -10,31 +10,17 @@ import { dashboardRoutes } from './dashboard/dashboard.routes';
 import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
-
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
-    // {
-    //   path: '',
-    //   loadChildren: () => import('lazy-path').then(m => m.lazy-module)
-    // },
-        {
-        path: '',
-        component: DashboardComponent,
-        children: dashboardRoutes,
-        canActivate: [AuthGuard]
-    },
-    { path: '**', redirectTo: '' }
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  {
+    path: '',
+    loadChildren: () => import('./ingreso-egreso/operation.module').then(m => m.OperationModule)
+  },
+  { path: '**', redirectTo: '' },
 ];
 
-
 @NgModule({
-
-    imports: [
-        RouterModule.forRoot( routes )
-    ],
-    exports: [
-        RouterModule
-    ]
-
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
