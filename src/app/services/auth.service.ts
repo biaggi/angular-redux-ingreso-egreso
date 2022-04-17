@@ -6,6 +6,7 @@ import { createUser, UserModel } from '../model/user.model';
 import { AppState } from '../app.reducer';
 import { Store } from '@ngrx/store';
 import { setUser, unsetUser } from '../auth/auth.actions';
+import { Subscription } from 'rxjs';
 
 export interface UserIface {
   name: string;
@@ -17,6 +18,7 @@ export interface UserIface {
   providedIn: 'root',
 })
 export class AuthService {
+  userSubscription: Subscription | undefined;
   constructor(
     public auth: AngularFireAuth,
     public firestore: AngularFirestore,
@@ -39,10 +41,9 @@ export class AuthService {
       console.log(user?.uid);
       console.log(user?.email);
       if (user) {
-        return this.firestore
+        this.userSubscription = this.firestore
           .doc(this.getDoc(user.uid))
           .valueChanges()
-          .pipe(take(1))
           .subscribe((fsUser) => {
             this.store.dispatch(
               setUser({
@@ -50,7 +51,9 @@ export class AuthService {
               })
             );
           });
+        return this.userSubscription;
       }
+      this.userSubscription?.unsubscribe();
       return this.store.dispatch(unsetUser());
     });
   }
