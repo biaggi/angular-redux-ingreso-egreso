@@ -17,9 +17,10 @@
                     <tbody>
                         <tr *ngFor="let operation of operations">
                             <td>{{operation.description}}</td>
-                            <td>{{operation.amount}}</td>
-                            <td>{{operation.type}}</td>
-                            <td><button class="btn btn-primary">E</button><button class="btn btn-danger">D</button></td>
+                            <td>{{operation.amount | currency}}</td>
+                            <td [class.text-success]="operation.type == 'ingreso'" [class.text-danger]="operation.type == 'egreso'">
+                                {{operation.type}}</td>
+                            <td><button class="btn btn-danger" (click)="delete(operation.uid)">Borrar</button></td>
                         </tr>
                     </tbody>
 

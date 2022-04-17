@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 const DOCUMENT_NAME = 'ingresos-egresos';
+const COLLECTION = 'items';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,12 @@ export class OperationsService {
   private getDoc(uid: string): AngularFirestoreDocument<OperationModel> {
     return this.firestore.doc(`${uid}/${DOCUMENT_NAME}`);
   }
-  set(operation: {
+
+  private getItem(userUid: string, docUid: string): AngularFirestoreDocument<OperationModel> {
+    return this.firestore.doc(`${userUid}/${DOCUMENT_NAME}/${COLLECTION}/${docUid}`);
+  }
+
+  create(operation: {
     description: string;
     amount: number;
     type: IngresoEgresoType;
@@ -33,7 +39,15 @@ export class OperationsService {
     if (!user) return null;
     const { uid } = user;
 
-    return this.getDoc(uid).collection('items').add(operation);
+    return this.getDoc(uid).collection(COLLECTION).add(operation);
+  }
+
+  delete(docUid: string) {
+    const user = this.authService.user;
+    if (!user) return null;
+    const { uid } = user;
+
+    return this.getItem(uid, docUid).delete();
   }
 
   initOperationsListener(uid: string): Observable<OperationModel[]> {
